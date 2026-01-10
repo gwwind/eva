@@ -39,6 +39,35 @@
         <button class="start-button" type="button">
           Start
         </button>
+
+        <section class="quiz-stage is-hidden" id="quiz-stage" aria-live="polite">
+          <div class="quiz-meta">
+            <span class="quiz-difficulty">Easy</span>
+            <span class="quiz-progress">Question 1 of 15</span>
+          </div>
+
+          <h2 class="quiz-question">Question text</h2>
+
+          <div class="quiz-answers" role="group" aria-label="Answer choices">
+            <button class="answer-button" type="button">Answer A</button>
+            <button class="answer-button" type="button">Answer B</button>
+            <button class="answer-button" type="button">Answer C</button>
+            <button class="answer-button" type="button">Answer D</button>
+          </div>
+
+          <div class="quiz-feedback" role="status">
+            <span class="feedback-status">Choose an answer to begin.</span>
+            <span class="feedback-correct"></span>
+          </div>
+
+          <button class="next-button" type="button">
+            Next
+          </button>
+
+          <div class="quiz-result is-hidden" role="status">
+            <p class="result-message">You got 0 out of 15 correct.</p>
+          </div>
+        </section>
       </section>
     </main>
 
