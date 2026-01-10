@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz Difficulty Template</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="quiz-card" aria-labelledby="quiz-title">
+        <header class="quiz-header">
+          <p class="quiz-emoji" aria-hidden="true">✿</p>
+          <h1 id="quiz-title">Quiz</h1>
+        </header>
+
+        <p class="quiz-subtitle">Pick your difficulty ✨</p>
+
+        <div class="difficulty-list" role="group" aria-label="Quiz difficulty">
+          <button class="difficulty-button" type="button" data-difficulty="Easy">
+            Easy
+          </button>
+          <button class="difficulty-button" type="button" data-difficulty="Medium">
+            Medium
+          </button>
+          <button class="difficulty-button" type="button" data-difficulty="Hard">
+            Hard
+          </button>
+          <button class="difficulty-button" type="button" data-difficulty="Impossible">
+            Impossible
+          </button>
+        </div>
+
+        <div class="selection" role="status" aria-live="polite">
+          <span class="selection-label">Selected:</span>
+          <span class="selection-value">None yet</span>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
