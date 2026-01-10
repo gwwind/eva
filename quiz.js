@@ -124,6 +124,163 @@ const easyQuestions = [
   },
 ];
 
+const mediumQuestions = [
+  {
+    question:
+      "Why are species with specialized diets more vulnerable to extinction?",
+    answers: [
+      "They are easier to locate",
+      "Environmental changes affect them more strongly",
+      "They compete less for resources",
+      "They migrate less often",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question: "How does habitat fragmentation reduce animal survival?",
+    answers: [
+      "It increases competition between species",
+      "It limits movement and access to resources",
+      "It changes animal behavior instantly",
+      "It improves predator efficiency",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question:
+      "Which factor most directly explains why elephants influence many other species?",
+    answers: [
+      "Their size discourages predators",
+      "Their movement patterns spread seeds and reshape vegetation",
+      "Their long lifespan stabilizes populations",
+      "Their social structure controls group behavior",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question: "Why can removing a single predator species alter an entire ecosystem?",
+    answers: [
+      "Predators consume many different species",
+      "Predators prevent prey populations from expanding excessively",
+      "Predators migrate across multiple habitats",
+      "Predators are genetically diverse",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question: "Why is illegal wildlife trade especially harmful to animals like rhinos?",
+    answers: [
+      "They live in limited geographic regions",
+      "Their reproduction rate is slow relative to removal",
+      "They require large quantities of food",
+      "Their habitats are already protected",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question: "How does climate change indirectly threaten land animals?",
+    answers: [
+      "By forcing immediate behavioral changes",
+      "By altering ecosystems faster than species can adapt",
+      "By increasing competition between predators",
+      "By removing natural predators",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question: "Why are large carnivores often absent from disturbed habitats?",
+    answers: [
+      "They avoid human presence completely",
+      "They require stable prey populations and large territories",
+      "They reproduce more slowly than herbivores",
+      "They are less adaptable to new climates",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question: "Which scenario best represents a trophic cascade?",
+    answers: [
+      "Loss of forest cover reduces rainfall",
+      "Predator decline leads to overgrazing by herbivores",
+      "Seasonal migration alters food availability",
+      "Increased rainfall improves plant growth",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question: "What is the primary purpose of wildlife corridors?",
+    answers: [
+      "To increase total habitat area",
+      "To maintain genetic exchange between populations",
+      "To reduce predator movement",
+      "To control animal migration routes",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question: "Why is habitat restoration considered a long-term conservation strategy?",
+    answers: [
+      "It focuses on individual species recovery",
+      "It supports ecological processes and multiple species",
+      "It prevents all future habitat loss",
+      "It eliminates human involvement",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question: "Why does biodiversity increase ecosystem stability?",
+    answers: [
+      "Diverse systems grow faster",
+      "Multiple species can perform overlapping ecological roles",
+      "Biodiversity reduces competition",
+      "Diverse ecosystems are less affected by climate",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question:
+      "Which conservation approach best addresses underlying causes of endangerment?",
+    answers: [
+      "Captive breeding programs",
+      "Enforcing habitat protection policies",
+      "Relocating animals to safer areas",
+      "Increasing public awareness campaigns",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question: "Why is extinction considered a permanent loss?",
+    answers: [
+      "Evolution cannot create new species",
+      "Ecological relationships built over time cannot be replaced",
+      "Ecosystems stop functioning immediately",
+      "New species require human intervention",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question: "Which outcome is most likely if a keystone species disappears?",
+    answers: [
+      "Temporary population decline",
+      "Major changes in ecosystem structure",
+      "Replacement by similar species",
+      "No noticeable effect",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question:
+      "Which statement best reflects why endangered land animals matter to humans?",
+    answers: [
+      "They provide scientific data",
+      "They contribute to stable ecosystems that support human life",
+      "They attract tourism",
+      "They are culturally significant",
+    ],
+    correctIndex: 1,
+  },
+];
+
 const resetFeedback = () => {
   feedbackStatus.textContent = "Choose an answer to begin.";
   feedbackCorrect.textContent = "";
@@ -131,9 +288,9 @@ const resetFeedback = () => {
 };
 
 const renderQuestion = () => {
-  const questionData = easyQuestions[currentQuestionIndex];
+  const questionData = currentQuestions[currentQuestionIndex];
   quizProgress.textContent = `Question ${currentQuestionIndex + 1} of ${
-    easyQuestions.length
+    currentQuestions.length
   }`;
   quizQuestion.textContent = questionData.question;
   answerButtons.forEach((button, index) => {
@@ -148,13 +305,13 @@ const renderQuestion = () => {
 
 const showResult = () => {
   quizResult.classList.remove("is-hidden");
-  resultMessage.textContent = `You got ${correctCount} out of ${easyQuestions.length} correct.`;
+  resultMessage.textContent = `You got ${correctCount} out of ${currentQuestions.length} correct.`;
   nextButton.classList.add("is-hidden");
 };
 
 answerButtons.forEach((button, index) => {
   button.addEventListener("click", () => {
-    const questionData = easyQuestions[currentQuestionIndex];
+    const questionData = currentQuestions[currentQuestionIndex];
     const correctIndex = questionData.correctIndex;
     const correctLetter = String.fromCharCode(65 + correctIndex);
     answerButtons.forEach((btn, btnIndex) => {
@@ -177,7 +334,7 @@ answerButtons.forEach((button, index) => {
 });
 
 nextButton.addEventListener("click", () => {
-  if (currentQuestionIndex < easyQuestions.length - 1) {
+  if (currentQuestionIndex < currentQuestions.length - 1) {
     currentQuestionIndex += 1;
     renderQuestion();
     return;
@@ -187,5 +344,12 @@ nextButton.addEventListener("click", () => {
 
 const params = new URLSearchParams(window.location.search);
 const difficultyParam = params.get("difficulty") || "Easy";
-quizDifficulty.textContent = difficultyParam;
+const normalizedDifficulty = difficultyParam.toLowerCase();
+const questionSets = {
+  easy: { label: "Easy", items: easyQuestions },
+  medium: { label: "Medium", items: mediumQuestions },
+};
+const selectedSet = questionSets[normalizedDifficulty] || questionSets.easy;
+const currentQuestions = selectedSet.items;
+quizDifficulty.textContent = selectedSet.label;
 renderQuestion();
