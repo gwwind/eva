@@ -177,6 +177,10 @@ startButton.addEventListener("click", () => {
     selectionValue.textContent = "Choose a difficulty first";
     return;
   }
+  const quizUrl = `${window.location.pathname}?difficulty=${encodeURIComponent(
+    currentDifficulty
+  )}`;
+  window.open(quizUrl, "_blank", "noopener,noreferrer");
   selectionLabel.textContent = "Starting:";
   selectionValue.textContent = currentDifficulty;
   quizDifficulty.textContent = currentDifficulty;
