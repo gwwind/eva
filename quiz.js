@@ -724,10 +724,16 @@ selectedSetKey = questionSets[normalizedDifficulty]
   : "easy";
 const selectedSet = questionSets[selectedSetKey];
 const hardUnlocked = localStorage.getItem("hardPerfectScore") === "true";
-if (normalizedDifficulty === "impossible" && !hardUnlocked) {
-  quizStage.classList.add("is-hidden");
-  quizWarning.classList.remove("is-hidden");
-  quizDifficulty.textContent = "Impossible";
+if (normalizedDifficulty === "impossible") {
+  if (!hardUnlocked) {
+    quizStage.classList.add("is-hidden");
+    quizWarning.classList.remove("is-hidden");
+    quizDifficulty.textContent = "Impossible";
+  } else {
+    localStorage.removeItem("hardPerfectScore");
+    quizStage.classList.remove("is-hidden");
+    quizWarning.classList.add("is-hidden");
+  }
 } else {
   quizStage.classList.remove("is-hidden");
   quizWarning.classList.add("is-hidden");
