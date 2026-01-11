@@ -4,6 +4,11 @@ const selectionLabel = document.querySelector(".selection-label");
 const startButton = document.querySelector(".start-button");
 let currentDifficulty = "";
 
+const openQuiz = (difficulty) => {
+  const quizUrl = `quiz.html?difficulty=${encodeURIComponent(difficulty)}`;
+  window.open(quizUrl, "_blank", "noopener,noreferrer");
+};
+
 const updateSelection = (selectedButton) => {
   buttons.forEach((button) => {
     button.classList.toggle("is-selected", button === selectedButton);
@@ -14,7 +19,14 @@ const updateSelection = (selectedButton) => {
 };
 
 buttons.forEach((button) => {
-  button.addEventListener("click", () => updateSelection(button));
+  button.addEventListener("click", () => {
+    const selectedDifficulty = button.dataset.difficulty;
+    if (currentDifficulty === selectedDifficulty) {
+      openQuiz(selectedDifficulty);
+      return;
+    }
+    updateSelection(button);
+  });
 });
 
 startButton.addEventListener("click", () => {
@@ -23,8 +35,5 @@ startButton.addEventListener("click", () => {
     selectionValue.textContent = "Choose a difficulty first";
     return;
   }
-  const quizUrl = `quiz.html?difficulty=${encodeURIComponent(
-    currentDifficulty
-  )}`;
-  window.open(quizUrl, "_blank", "noopener,noreferrer");
+  openQuiz(currentDifficulty);
 });
