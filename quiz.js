@@ -697,6 +697,17 @@ document.addEventListener("keydown", (event) => {
   handleAnswerSelection(keyMap[key]);
 });
 
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter") {
+    return;
+  }
+  if (nextButton.classList.contains("is-hidden")) {
+    return;
+  }
+  event.preventDefault();
+  nextButton.click();
+});
+
 warningNextButton.addEventListener("click", () => {
   window.location.href = "quiz.html?difficulty=Hard";
 });
