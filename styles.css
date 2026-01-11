@@ -1,0 +1,466 @@
+@import url("https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Source+Sans+3:wght@400;600;700&display=swap");
+
+:root {
+  color-scheme: light;
+  --bg: #f6f1ff;
+  --bg-accent: #ffeaf6;
+  --card: #ffffff;
+  --ink: #2b2435;
+  --muted: #796a8f;
+  --stroke: #2b2435;
+  --accent: #ff7ab6;
+  --shadow: rgba(33, 18, 53, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, var(--bg-accent), var(--bg));
+  font-family: "Source Sans 3", system-ui, sans-serif;
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+}
+
+.page {
+  width: min(420px, 90vw);
+}
+
+.quiz-card {
+  position: relative;
+  background: var(--card);
+  border-radius: 18px;
+  box-shadow: 0 18px 35px var(--shadow);
+  padding: 2.75rem 2.5rem 2.5rem;
+  display: grid;
+  gap: 1.75rem;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.quiz-card::before,
+.quiz-card::after {
+  content: "";
+  position: absolute;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 35%, #ffd5ec 36%, #ffd5ec 70%, transparent 71%);
+  opacity: 0.9;
+}
+
+.quiz-card::before {
+  top: -18px;
+  left: -18px;
+}
+
+.quiz-card::after {
+  bottom: -18px;
+  right: -18px;
+  background: radial-gradient(circle, #fff 35%, #d7f5ff 36%, #d7f5ff 70%, transparent 71%);
+}
+
+.quiz-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.quiz-emoji {
+  font-size: 2rem;
+  transform: translateY(0.35rem) rotate(-12deg);
+}
+
+h1 {
+  font-family: "Patrick Hand", "Source Sans 3", sans-serif;
+  font-size: clamp(2.8rem, 8vw, 4.2rem);
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 0 #ffe3f1;
+}
+
+.quiz-subtitle {
+  text-align: center;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.difficulty-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.difficulty-button {
+  font-family: "Patrick Hand", "Source Sans 3", sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.06em;
+  padding: 0.75rem 1.5rem;
+  border-radius: 20px;
+  background: #fff6fb;
+  border: 2px dashed var(--stroke);
+  color: var(--ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  cursor: pointer;
+}
+
+.difficulty-button:nth-child(2) {
+  background: #f0f8ff;
+}
+
+.difficulty-button:nth-child(3) {
+  background: #fff7e6;
+}
+
+.difficulty-button:nth-child(4) {
+  background: #f2ecff;
+}
+
+.difficulty-button:hover,
+.difficulty-button:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+  outline: none;
+  background: #ffffff;
+}
+
+.difficulty-button.is-selected {
+  border-style: solid;
+  background: #ffe3f1;
+  box-shadow: 0 10px 20px rgba(64, 39, 92, 0.2);
+  transform: translateY(-2px);
+}
+
+.selection {
+  border-top: 1px dashed rgba(43, 36, 53, 0.25);
+  padding-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.selection-value {
+  font-weight: 700;
+}
+
+.start-button {
+  font-family: "Patrick Hand", "Source Sans 3", sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  border: 2px solid var(--stroke);
+  background: linear-gradient(120deg, #ffb4d4, #ffdbe9);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 0 10px 18px rgba(64, 39, 92, 0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.start-button:hover,
+.start-button:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 24px rgba(64, 39, 92, 0.25);
+  outline: none;
+}
+
+.quiz-stage {
+  border-top: 1px dashed rgba(43, 36, 53, 0.2);
+  padding-top: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.quiz-stage.is-hidden {
+  display: none;
+}
+
+.quiz-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.quiz-difficulty {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+}
+
+.quiz-question {
+  font-family: "Patrick Hand", "Source Sans 3", sans-serif;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.quiz-answers {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.answer-button {
+  font-family: "Source Sans 3", system-ui, sans-serif;
+  font-size: 1rem;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-radius: 16px;
+  border: 1.5px solid rgba(43, 36, 53, 0.25);
+  background: #ffffff;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.answer-button:hover,
+.answer-button:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(64, 39, 92, 0.15);
+  outline: none;
+}
+
+.answer-button.is-correct {
+  border-color: #3bbf7f;
+  background: #e5fff3;
+}
+
+.answer-button.is-incorrect {
+  border-color: #f28ba8;
+  background: #ffe6ee;
+}
+
+.answer-button:disabled {
+  cursor: default;
+  opacity: 0.85;
+  transform: none;
+  box-shadow: none;
+}
+
+.quiz-feedback {
+  font-size: 0.95rem;
+  text-align: center;
+  color: var(--muted);
+  min-height: 2.5rem;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.feedback-status {
+  font-weight: 600;
+}
+
+.feedback-correct {
+  color: var(--ink);
+}
+
+.next-button {
+  font-family: "Patrick Hand", "Source Sans 3", sans-serif;
+  font-size: 1.1rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  border: 2px solid var(--stroke);
+  background: #fff1c9;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.next-button:hover,
+.next-button:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(64, 39, 92, 0.18);
+  outline: none;
+}
+
+.next-button.is-hidden {
+  display: none;
+}
+
+.quiz-result {
+  text-align: center;
+  background: #f4edff;
+  border-radius: 16px;
+  padding: 1rem;
+  border: 1px dashed rgba(43, 36, 53, 0.25);
+}
+
+.quiz-result.is-hidden {
+  display: none;
+}
+
+.quiz-warning {
+  margin-top: 1rem;
+  background: #ffeef4;
+  border-radius: 16px;
+  padding: 1.25rem;
+  border: 1px dashed rgba(43, 36, 53, 0.25);
+  display: grid;
+  gap: 1rem;
+  text-align: center;
+}
+
+.quiz-warning.is-hidden {
+  display: none;
+}
+
+.name-gate {
+  display: grid;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.name-gate.is-hidden {
+  display: none;
+}
+
+.name-prompt {
+  color: var(--muted);
+}
+
+.name-tip {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.name-input-row {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.name-input {
+  padding: 0.7rem 1rem;
+  border-radius: 16px;
+  border: 1.5px solid rgba(43, 36, 53, 0.25);
+  font-size: 1rem;
+}
+
+.name-input:focus-visible {
+  outline: 2px solid rgba(255, 122, 182, 0.4);
+  outline-offset: 2px;
+}
+
+.name-start-button {
+  font-family: "Patrick Hand", "Source Sans 3", sans-serif;
+  font-size: 1.05rem;
+  padding: 0.65rem 1.4rem;
+  border-radius: 999px;
+  border: 2px solid var(--stroke);
+  background: #e9f8ff;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.name-start-button:hover,
+.name-start-button:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(64, 39, 92, 0.18);
+  outline: none;
+}
+
+.name-warning {
+  color: #c44b7d;
+  font-weight: 600;
+}
+
+.repeat-modal {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.75);
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+.repeat-modal.is-hidden {
+  display: none;
+}
+
+.repeat-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 1.5rem;
+  border: 2px dashed rgba(43, 36, 53, 0.25);
+  box-shadow: 0 18px 35px rgba(64, 39, 92, 0.2);
+  display: grid;
+  gap: 1rem;
+  position: relative;
+  text-align: center;
+}
+
+.repeat-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.repeat-continue-button,
+.repeat-cancel-button {
+  font-family: "Patrick Hand", "Source Sans 3", sans-serif;
+  font-size: 1rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  border: 2px solid var(--stroke);
+  background: #fff1c9;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.repeat-cancel-button {
+  background: #ffe3f1;
+}
+
+.repeat-continue-button:hover,
+.repeat-continue-button:focus-visible,
+.repeat-cancel-button:hover,
+.repeat-cancel-button:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(64, 39, 92, 0.18);
+  outline: none;
+}
+
+.repeat-close-button {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(43, 36, 53, 0.3);
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.repeat-close-button.is-hidden {
+  display: none;
+}
+
+.warning-text {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.warning-next-button {
+  font-family: "Patrick Hand", "Source Sans 3", sans-serif;
+  font-size: 1.05rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 999px;
+  border: 2px solid var(--stroke);
+  background: #fff1c9;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.warning-next-button:hover,
+.warning-next-button:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(64, 39, 92, 0.18);
+  outline: none;
+}
