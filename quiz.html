@@ -14,6 +14,23 @@
           <h1 id="quiz-title">Quiz Time</h1>
         </header>
 
+        <section class="name-gate" id="name-gate" aria-live="polite">
+          <p class="name-prompt">Enter your name to begin ✨</p>
+          <div class="name-input-row">
+            <input
+              class="name-input"
+              id="player-name"
+              type="text"
+              placeholder="Your name"
+              autocomplete="name"
+            />
+            <button class="name-start-button" type="button">
+              Continue
+            </button>
+          </div>
+          <p class="name-warning is-hidden" role="status"></p>
+        </section>
+
         <section class="quiz-stage" id="quiz-stage" aria-live="polite">
           <div class="quiz-meta">
             <span class="quiz-difficulty">Easy</span>
@@ -51,6 +68,25 @@
             Go to Hard Quiz
           </button>
         </section>
+
+        <div class="repeat-modal is-hidden" role="dialog" aria-modal="true">
+          <div class="repeat-card">
+            <p class="repeat-text">
+              Looks like this name has done the quiz before. Continue anyway?
+            </p>
+            <div class="repeat-actions">
+              <button class="repeat-continue-button" type="button">
+                Continue
+              </button>
+              <button class="repeat-cancel-button" type="button">
+                Cancel
+              </button>
+            </div>
+            <button class="repeat-close-button is-hidden" type="button">
+              ✕
+            </button>
+          </div>
+        </div>
       </section>
     </main>
 

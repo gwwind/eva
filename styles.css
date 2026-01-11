@@ -308,6 +308,134 @@ h1 {
   display: none;
 }
 
+.name-gate {
+  display: grid;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.name-gate.is-hidden {
+  display: none;
+}
+
+.name-prompt {
+  color: var(--muted);
+}
+
+.name-input-row {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.name-input {
+  padding: 0.7rem 1rem;
+  border-radius: 16px;
+  border: 1.5px solid rgba(43, 36, 53, 0.25);
+  font-size: 1rem;
+}
+
+.name-input:focus-visible {
+  outline: 2px solid rgba(255, 122, 182, 0.4);
+  outline-offset: 2px;
+}
+
+.name-start-button {
+  font-family: "Patrick Hand", "Source Sans 3", sans-serif;
+  font-size: 1.05rem;
+  padding: 0.65rem 1.4rem;
+  border-radius: 999px;
+  border: 2px solid var(--stroke);
+  background: #e9f8ff;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.name-start-button:hover,
+.name-start-button:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(64, 39, 92, 0.18);
+  outline: none;
+}
+
+.name-warning {
+  color: #c44b7d;
+  font-weight: 600;
+}
+
+.repeat-modal {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.75);
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+.repeat-modal.is-hidden {
+  display: none;
+}
+
+.repeat-card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 1.5rem;
+  border: 2px dashed rgba(43, 36, 53, 0.25);
+  box-shadow: 0 18px 35px rgba(64, 39, 92, 0.2);
+  display: grid;
+  gap: 1rem;
+  position: relative;
+  text-align: center;
+}
+
+.repeat-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.repeat-continue-button,
+.repeat-cancel-button {
+  font-family: "Patrick Hand", "Source Sans 3", sans-serif;
+  font-size: 1rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  border: 2px solid var(--stroke);
+  background: #fff1c9;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.repeat-cancel-button {
+  background: #ffe3f1;
+}
+
+.repeat-continue-button:hover,
+.repeat-continue-button:focus-visible,
+.repeat-cancel-button:hover,
+.repeat-cancel-button:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(64, 39, 92, 0.18);
+  outline: none;
+}
+
+.repeat-close-button {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(43, 36, 53, 0.3);
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.repeat-close-button.is-hidden {
+  display: none;
+}
+
 .warning-text {
   font-weight: 600;
   color: var(--ink);

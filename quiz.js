@@ -10,10 +10,21 @@ const resultMessage = document.querySelector(".result-message");
 const quizStage = document.querySelector(".quiz-stage");
 const quizWarning = document.querySelector(".quiz-warning");
 const warningNextButton = document.querySelector(".warning-next-button");
+const nameGate = document.querySelector(".name-gate");
+const nameInput = document.querySelector(".name-input");
+const nameStartButton = document.querySelector(".name-start-button");
+const nameWarning = document.querySelector(".name-warning");
+const repeatModal = document.querySelector(".repeat-modal");
+const repeatContinueButton = document.querySelector(
+  ".repeat-continue-button"
+);
+const repeatCancelButton = document.querySelector(".repeat-cancel-button");
+const repeatCloseButton = document.querySelector(".repeat-close-button");
 let currentQuestionIndex = 0;
 let correctCount = 0;
 let hasAnswered = false;
 let selectedSetKey = "easy";
+let playerName = "";
 
 const easyQuestions = [
   {
@@ -619,6 +630,83 @@ const resetFeedback = () => {
   nextButton.classList.add("is-hidden");
 };
 
+const storedNamesKey = "quizPlayerNames";
+
+const loadStoredNames = () => {
+  try {
+    return JSON.parse(localStorage.getItem(storedNamesKey) || "[]");
+  } catch (error) {
+    return [];
+  }
+};
+
+const saveName = (name) => {
+  const storedNames = loadStoredNames();
+  if (!storedNames.includes(name)) {
+    storedNames.push(name);
+    localStorage.setItem(storedNamesKey, JSON.stringify(storedNames));
+  }
+};
+
+const closeRepeatModal = () => {
+  repeatModal.classList.add("is-hidden");
+  repeatCloseButton.classList.add("is-hidden");
+};
+
+const showRepeatModal = () => {
+  repeatModal.classList.remove("is-hidden");
+  repeatCloseButton.classList.add("is-hidden");
+  setTimeout(() => {
+    repeatCloseButton.classList.remove("is-hidden");
+  }, 3000);
+};
+
+const startQuizFlow = () => {
+  nameGate.classList.add("is-hidden");
+  quizStage.classList.remove("is-hidden");
+  renderQuestion();
+};
+
+nameStartButton.addEventListener("click", () => {
+  const submittedName = nameInput.value.trim();
+  if (!submittedName) {
+    nameWarning.textContent = "Please enter your name to continue.";
+    nameWarning.classList.remove("is-hidden");
+    return;
+  }
+  nameWarning.classList.add("is-hidden");
+  playerName = submittedName;
+  const storedNames = loadStoredNames();
+  if (storedNames.includes(submittedName)) {
+    showRepeatModal();
+    return;
+  }
+  saveName(submittedName);
+  startQuizFlow();
+});
+
+nameInput.addEventListener("keydown", (event) => {
+  if (event.key !== "Enter") {
+    return;
+  }
+  event.preventDefault();
+  nameStartButton.click();
+});
+
+repeatContinueButton.addEventListener("click", () => {
+  saveName(playerName);
+  closeRepeatModal();
+  startQuizFlow();
+});
+
+repeatCancelButton.addEventListener("click", () => {
+  window.location.href = "index.html";
+});
+
+repeatCloseButton.addEventListener("click", () => {
+  closeRepeatModal();
+});
+
 const renderQuestion = () => {
   const questionData = currentQuestions[currentQuestionIndex];
   quizProgress.textContent = `Question ${currentQuestionIndex + 1} of ${
@@ -737,20 +825,20 @@ const selectedSet = questionSets[selectedSetKey];
 const hardUnlocked = localStorage.getItem("hardPerfectScore") === "true";
 if (normalizedDifficulty === "impossible") {
   if (!hardUnlocked) {
+    nameGate.classList.add("is-hidden");
     quizStage.classList.add("is-hidden");
     quizWarning.classList.remove("is-hidden");
     quizDifficulty.textContent = "Impossible";
   } else {
     localStorage.removeItem("hardPerfectScore");
-    quizStage.classList.remove("is-hidden");
+    quizStage.classList.add("is-hidden");
     quizWarning.classList.add("is-hidden");
+    nameGate.classList.remove("is-hidden");
   }
 } else {
-  quizStage.classList.remove("is-hidden");
+  quizStage.classList.add("is-hidden");
   quizWarning.classList.add("is-hidden");
+  nameGate.classList.remove("is-hidden");
 }
 const currentQuestions = selectedSet.items;
 quizDifficulty.textContent = selectedSet.label;
-if (!quizStage.classList.contains("is-hidden")) {
-  renderQuestion();
-}
