@@ -322,6 +322,11 @@ h1 {
   color: var(--muted);
 }
 
+.name-tip {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
 .name-input-row {
   display: grid;
   gap: 0.75rem;
