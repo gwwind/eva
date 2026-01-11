@@ -673,6 +673,30 @@ answerButtons.forEach((button, index) => {
   });
 });
 
+const handleAnswerSelection = (index) => {
+  if (hasAnswered) {
+    return;
+  }
+  const targetButton = answerButtons[index];
+  if (!targetButton) {
+    return;
+  }
+  targetButton.click();
+};
+
+document.addEventListener("keydown", (event) => {
+  if (event.key.length !== 1) {
+    return;
+  }
+  const key = event.key.toLowerCase();
+  const keyMap = { a: 0, b: 1, c: 2, d: 3 };
+  if (!(key in keyMap)) {
+    return;
+  }
+  event.preventDefault();
+  handleAnswerSelection(keyMap[key]);
+});
+
 warningNextButton.addEventListener("click", () => {
   window.location.href = "quiz.html?difficulty=Hard";
 });
