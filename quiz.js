@@ -776,6 +776,14 @@ document.addEventListener("keydown", (event) => {
   if (event.key.length !== 1) {
     return;
   }
+  if (!quizStage.classList.contains("is-hidden")) {
+    const activeElement = document.activeElement;
+    if (activeElement && activeElement.matches("input, textarea")) {
+      return;
+    }
+  } else {
+    return;
+  }
   const key = event.key.toLowerCase();
   const keyMap = { a: 0, b: 1, c: 2, d: 3 };
   if (!(key in keyMap)) {
