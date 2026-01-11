@@ -281,6 +281,172 @@ const mediumQuestions = [
   },
 ];
 
+const hardQuestions = [
+  {
+    question:
+      "Which factor most limits our ability to forecast extinction risk under future climate scenarios?",
+    answers: [
+      "Nonlinear species–environment interactions",
+      "Insufficient population monitoring",
+      "Inaccurate climate models",
+      "Limited understanding of trophic structure",
+    ],
+    correctIndex: 0,
+  },
+  {
+    question:
+      "Why can increasing protected area size fail to improve species persistence?",
+    answers: [
+      "Larger areas increase edge effects",
+      "Species distributions shift beyond protected boundaries",
+      "Protection lowers reproductive success",
+      "Predators accumulate inside reserves",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question:
+      "Which population property most strongly determines vulnerability to demographic stochasticity?",
+    answers: [
+      "Absolute population size",
+      "Generation time",
+      "Effective population size",
+      "Spatial dispersion",
+    ],
+    correctIndex: 0,
+  },
+  {
+    question:
+      "Which statement best explains why genetic rescue sometimes produces negative outcomes?",
+    answers: [
+      "It reduces local adaptation",
+      "It increases genetic drift",
+      "It lowers heterozygosity",
+      "It accelerates inbreeding",
+    ],
+    correctIndex: 0,
+  },
+  {
+    question:
+      "Which condition most undermines the assumption that habitat corridors always benefit conservation?",
+    answers: [
+      "Corridors increase disease transmission",
+      "Corridors reduce habitat quality",
+      "Corridors alter predator–prey dynamics",
+      "Corridors can facilitate invasive species spread",
+    ],
+    correctIndex: 3,
+  },
+  {
+    question:
+      "Which mechanism best explains why top predators disappear before herbivores in disturbed systems?",
+    answers: [
+      "Higher exposure to human conflict",
+      "Slower life histories combined with energetic loss",
+      "Reduced reproductive success in fragmented habitats",
+      "Greater sensitivity to climate variability",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question: "Which metric is LEAST reliable as a proxy for ecosystem resilience?",
+    answers: [
+      "Species richness",
+      "Functional trait diversity",
+      "Network connectivity",
+      "Phylogenetic uniqueness",
+    ],
+    correctIndex: 3,
+  },
+  {
+    question: "Why does restoring census population size not guarantee long-term persistence?",
+    answers: [
+      "Genetic load may persist across generations",
+      "Carrying capacity may fluctuate",
+      "Mutation supply is insufficient",
+      "Selection pressure is weakened",
+    ],
+    correctIndex: 0,
+  },
+  {
+    question:
+      "Which example represents a conservation success that masks long-term risk?",
+    answers: [
+      "Increasing population size with reduced Ne",
+      "Habitat restoration without species return",
+      "Predator reintroduction with prey decline",
+      "Captive breeding with rapid release",
+    ],
+    correctIndex: 0,
+  },
+  {
+    question:
+      "Which assumption underlying many extinction models is most frequently violated in real systems?",
+    answers: [
+      "Closed population structure",
+      "Density dependence",
+      "Environmental stochasticity",
+      "Random mating",
+    ],
+    correctIndex: 0,
+  },
+  {
+    question:
+      "Which factor most complicates defining “natural” reference states in conservation?",
+    answers: [
+      "Lack of historical data",
+      "Pre-human ecosystems were static",
+      "Human influence predates written records",
+      "Species ranges were historically fixed",
+    ],
+    correctIndex: 2,
+  },
+  {
+    question:
+      "Which statement best captures the main risk of managing species at the edge of their climatic range?",
+    answers: [
+      "Reduced genetic variation",
+      "Increased maladaptation under future conditions",
+      "Increased competition",
+      "Lower reproductive output",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question:
+      "Which process can cause ecosystem collapse WITHOUT immediate species extinctions?",
+    answers: [
+      "Loss of apex predators",
+      "Functional role erosion",
+      "Reduced species richness",
+      "Habitat fragmentation",
+    ],
+    correctIndex: 1,
+  },
+  {
+    question:
+      "Which conservation strategy is MOST sensitive to uncertainty in future selective pressures?",
+    answers: [
+      "Habitat preservation",
+      "Corridor construction",
+      "Community co-management",
+      "Assisted migration",
+    ],
+    correctIndex: 3,
+  },
+  {
+    question:
+      "Which claim about biodiversity and ecosystem stability is MOST defensible across systems?",
+    answers: [
+      "More species always increases stability",
+      "Stability depends primarily on keystone species",
+      "Redundancy buffers systems until thresholds are crossed",
+      "Stability is independent of biodiversity",
+    ],
+    correctIndex: 2,
+  },
+];
+
 const resetFeedback = () => {
   feedbackStatus.textContent = "Choose an answer to begin.";
   feedbackCorrect.textContent = "";
@@ -348,6 +514,7 @@ const normalizedDifficulty = difficultyParam.toLowerCase();
 const questionSets = {
   easy: { label: "Easy", items: easyQuestions },
   medium: { label: "Medium", items: mediumQuestions },
+  hard: { label: "Hard", items: hardQuestions },
 };
 const selectedSet = questionSets[normalizedDifficulty] || questionSets.easy;
 const currentQuestions = selectedSet.items;
