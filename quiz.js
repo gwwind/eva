@@ -7,8 +7,13 @@ const feedbackCorrect = document.querySelector(".feedback-correct");
 const nextButton = document.querySelector(".next-button");
 const quizResult = document.querySelector(".quiz-result");
 const resultMessage = document.querySelector(".result-message");
+const quizStage = document.querySelector(".quiz-stage");
+const quizWarning = document.querySelector(".quiz-warning");
+const warningNextButton = document.querySelector(".warning-next-button");
 let currentQuestionIndex = 0;
 let correctCount = 0;
+let hasAnswered = false;
+let selectedSetKey = "easy";
 
 const easyQuestions = [
   {
@@ -447,6 +452,167 @@ const hardQuestions = [
   },
 ];
 
+const impossibleQuestions = [
+  {
+    question:
+      "Which premise must be true for “extinction risk” to be a mathematically well-defined quantity?",
+    answers: [
+      "Population trajectories are ergodic",
+      "Future environments are statistically stationary",
+      "Species identity is temporally invariant",
+      "Observation does not influence population dynamics",
+    ],
+    correctIndex: 2,
+  },
+  {
+    question:
+      "At what point does adding biological realism to extinction models strictly decrease inferential power?",
+    answers: [
+      "When stochastic terms dominate deterministic structure",
+      "When parameter uncertainty exceeds measurement resolution",
+      "When causal pathways become underdetermined by data",
+      "When models cease to be computationally tractable",
+    ],
+    correctIndex: 2,
+  },
+  {
+    question:
+      "Which conservation intervention most strongly violates counterfactual reasoning?",
+    answers: [
+      "Habitat preservation",
+      "Genetic rescue",
+      "Captive breeding",
+      "Assisted migration",
+    ],
+    correctIndex: 3,
+  },
+  {
+    question:
+      "Why can effective population size (Ne) never serve as a sufficient condition for persistence?",
+    answers: [
+      "Ne fluctuates across generations",
+      "Ne excludes demographic variance",
+      "Ne assumes additive genetic architectures",
+      "Ne encodes no information about future selection",
+    ],
+    correctIndex: 3,
+  },
+  {
+    question:
+      "Which statement renders the concept of “ecosystem stability” non-invariant?",
+    answers: [
+      "Stability depends on species richness",
+      "Stability depends on disturbance frequency",
+      "Stability depends on observer-defined state variables",
+      "Stability depends on trophic structure",
+    ],
+    correctIndex: 2,
+  },
+  {
+    question:
+      "Which assumption must silently hold for the concept of a “keystone species” to remain coherent?",
+    answers: [
+      "Species interactions are linear",
+      "Effects are scale-independent",
+      "Causality is uniquely attributable",
+      "Functional redundancy is absent",
+    ],
+    correctIndex: 2,
+  },
+  {
+    question: "Which condition makes conservation outcomes fundamentally non-generalizable?",
+    answers: [
+      "Environmental heterogeneity",
+      "Evolutionary contingency",
+      "Human socio-political feedbacks",
+      "Absence of universal ecological laws",
+    ],
+    correctIndex: 3,
+  },
+  {
+    question: "Under which condition does biodiversity cease to be a meaningful explanatory variable?",
+    answers: [
+      "When diversity is low",
+      "When diversity is high",
+      "When functional roles overlap",
+      "When explanatory power collapses under scale transformation",
+    ],
+    correctIndex: 3,
+  },
+  {
+    question:
+      "When does preventing extinction maximally increase epistemic uncertainty?",
+    answers: [
+      "When intervention suppresses selection",
+      "When intervention stabilizes populations",
+      "When counterfactual extinction pathways become unobservable",
+      "When population growth is externally controlled",
+    ],
+    correctIndex: 2,
+  },
+  {
+    question:
+      "Which statement most directly blocks conservation biology from achieving Einstein-style predictive theory?",
+    answers: [
+      "Insufficient data",
+      "Nonlinear dynamics",
+      "Evolutionary novelty",
+      "Inability to test alternate futures",
+    ],
+    correctIndex: 3,
+  },
+  {
+    question:
+      "Which variable cannot be coherently defined without circularity in extinction modeling?",
+    answers: ["Carrying capacity", "Fitness", "Viability", "Risk"],
+    correctIndex: 3,
+  },
+  {
+    question:
+      "When does a species cease to be the “same species” for conservation purposes?",
+    answers: [
+      "After reproductive isolation",
+      "After functional role replacement",
+      "After genomic divergence",
+      "When identity depends on management goals",
+    ],
+    correctIndex: 3,
+  },
+  {
+    question:
+      "Which condition makes long-term conservation success logically undecidable?",
+    answers: [
+      "Rapid climate change",
+      "Coevolutionary feedbacks",
+      "Irreversibility of extinction",
+      "Inability to observe non-intervention outcomes",
+    ],
+    correctIndex: 3,
+  },
+  {
+    question:
+      "Which assumption is most deeply embedded — yet least acknowledged — in conservation prioritization?",
+    answers: [
+      "Species are equally valuable",
+      "Ecosystems have optimal states",
+      "Human values are separable from science",
+      "Extinction is objectively bad",
+    ],
+    correctIndex: 2,
+  },
+  {
+    question:
+      "Which claim about endangered land animals survives the strongest logical scrutiny?",
+    answers: [
+      "They should be protected",
+      "They are ecologically irreplaceable",
+      "Their loss destabilizes ecosystems",
+      "No claim survives without value assumptions",
+    ],
+    correctIndex: 3,
+  },
+];
+
 const resetFeedback = () => {
   feedbackStatus.textContent = "Choose an answer to begin.";
   feedbackCorrect.textContent = "";
@@ -466,6 +632,7 @@ const renderQuestion = () => {
       questionData.answers[index]
     }`;
   });
+  hasAnswered = false;
   resetFeedback();
 };
 
@@ -473,13 +640,20 @@ const showResult = () => {
   quizResult.classList.remove("is-hidden");
   resultMessage.textContent = `You got ${correctCount} out of ${currentQuestions.length} correct.`;
   nextButton.classList.add("is-hidden");
+  if (selectedSetKey === "hard" && correctCount === currentQuestions.length) {
+    localStorage.setItem("hardPerfectScore", "true");
+  }
 };
 
 answerButtons.forEach((button, index) => {
   button.addEventListener("click", () => {
+    if (hasAnswered) {
+      return;
+    }
     const questionData = currentQuestions[currentQuestionIndex];
     const correctIndex = questionData.correctIndex;
     const correctLetter = String.fromCharCode(65 + correctIndex);
+    hasAnswered = true;
     answerButtons.forEach((btn, btnIndex) => {
       btn.disabled = true;
       if (btnIndex === correctIndex) {
@@ -499,6 +673,10 @@ answerButtons.forEach((button, index) => {
   });
 });
 
+warningNextButton.addEventListener("click", () => {
+  window.location.href = "quiz.html?difficulty=Hard";
+});
+
 nextButton.addEventListener("click", () => {
   if (currentQuestionIndex < currentQuestions.length - 1) {
     currentQuestionIndex += 1;
@@ -515,8 +693,23 @@ const questionSets = {
   easy: { label: "Easy", items: easyQuestions },
   medium: { label: "Medium", items: mediumQuestions },
   hard: { label: "Hard", items: hardQuestions },
+  impossible: { label: "Impossible", items: impossibleQuestions },
 };
-const selectedSet = questionSets[normalizedDifficulty] || questionSets.easy;
+selectedSetKey = questionSets[normalizedDifficulty]
+  ? normalizedDifficulty
+  : "easy";
+const selectedSet = questionSets[selectedSetKey];
+const hardUnlocked = localStorage.getItem("hardPerfectScore") === "true";
+if (normalizedDifficulty === "impossible" && !hardUnlocked) {
+  quizStage.classList.add("is-hidden");
+  quizWarning.classList.remove("is-hidden");
+  quizDifficulty.textContent = "Impossible";
+} else {
+  quizStage.classList.remove("is-hidden");
+  quizWarning.classList.add("is-hidden");
+}
 const currentQuestions = selectedSet.items;
 quizDifficulty.textContent = selectedSet.label;
-renderQuestion();
+if (!quizStage.classList.contains("is-hidden")) {
+  renderQuestion();
+}
