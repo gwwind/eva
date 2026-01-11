@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz - Easy</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <section class="quiz-card" aria-labelledby="quiz-title">
+        <header class="quiz-header">
+          <p class="quiz-emoji" aria-hidden="true">✿</p>
+          <h1 id="quiz-title">Quiz Time</h1>
+        </header>
+
+        <section class="quiz-stage" id="quiz-stage" aria-live="polite">
+          <div class="quiz-meta">
+            <span class="quiz-difficulty">Easy</span>
+            <span class="quiz-progress">Question 1 of 15</span>
+          </div>
+
+          <h2 class="quiz-question">Question text</h2>
+
+          <div class="quiz-answers" role="group" aria-label="Answer choices">
+            <button class="answer-button" type="button">Answer A</button>
+            <button class="answer-button" type="button">Answer B</button>
+            <button class="answer-button" type="button">Answer C</button>
+            <button class="answer-button" type="button">Answer D</button>
+          </div>
+
+          <div class="quiz-feedback" role="status">
+            <span class="feedback-status">Choose an answer to begin.</span>
+            <span class="feedback-correct"></span>
+          </div>
+
+          <button class="next-button" type="button">
+            Next
+          </button>
+
+          <div class="quiz-result is-hidden" role="status">
+            <p class="result-message">You got 0 out of 15 correct.</p>
+          </div>
+        </section>
+
+        <section class="quiz-warning is-hidden" role="status">
+          <p class="warning-text">
+            You need a perfect score on Hard to unlock Impossible.
+          </p>
+          <button class="warning-next-button" type="button">
+            Go to Hard Quiz
+          </button>
+        </section>
+      </section>
+    </main>
+
+    <script src="quiz.js"></script>
+  </body>
+</html>
