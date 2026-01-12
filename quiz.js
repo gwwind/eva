@@ -732,7 +732,7 @@ const showResult = () => {
   } else if (correctCount >= 10) {
     outcomeMessage = "You Passed!";
   }
-  resultMessage.textContent = `You got ${correctCount} out of ${currentQuestions.length} correct. ${outcomeMessage}`;
+  resultMessage.innerHTML = `${outcomeMessage}<br>You got ${correctCount} out of ${currentQuestions.length} correct.`;
   nextButton.classList.add("is-hidden");
   if (selectedSetKey === "hard" && correctCount === currentQuestions.length) {
     localStorage.setItem("hardPerfectScore", "true");
