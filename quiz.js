@@ -726,7 +726,16 @@ const renderQuestion = () => {
 
 const showResult = () => {
   quizResult.classList.remove("is-hidden");
-  resultMessage.textContent = `You got ${correctCount} out of ${currentQuestions.length} correct.`;
+  let outcomeMessage = "YOU FAILED";
+  if (correctCount === currentQuestions.length) {
+    outcomeMessage = "Perfect score!";
+  } else if (correctCount >= 10) {
+    outcomeMessage = "You Passed!";
+  }
+  const percentScore = Math.round(
+    (correctCount / currentQuestions.length) * 100
+  );
+  resultMessage.innerHTML = `${outcomeMessage}<br>You got ${correctCount} out of ${currentQuestions.length} correct.<br>Score: ${percentScore}%`;
   nextButton.classList.add("is-hidden");
   if (selectedSetKey === "hard" && correctCount === currentQuestions.length) {
     localStorage.setItem("hardPerfectScore", "true");
